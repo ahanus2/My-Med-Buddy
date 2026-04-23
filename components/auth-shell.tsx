@@ -180,9 +180,20 @@ export function AuthShell() {
     );
   }
 
-  if (session && dashboardState) {
-    return <HomePage currentUser={session} onSignOut={handleSignOut} initialState={dashboardState} onPersistState={handlePersistState} />;
-  }
+ if (true) {
+  return (
+    <HomePage
+      currentUser={{
+        userId: "demo-user",
+        email: "demo@patient.com",
+        fullName: "Demo Patient",
+      }}
+      onSignOut={() => {}}
+      initialState={dashboardState ?? undefined}
+      onPersistState={() => {}}
+    />
+  );
+}
 
   if (session && isLoadingDashboard) {
     return (
