@@ -180,7 +180,7 @@ export function AuthShell() {
     );
   }
 
- if (true) {
+if (dashboardState) {
   return (
     <HomePage
       currentUser={{
@@ -189,7 +189,7 @@ export function AuthShell() {
         fullName: "Demo Patient",
       }}
       onSignOut={() => {}}
-      initialState={dashboardState ?? undefined}
+      initialState={dashboardState}
       onPersistState={() => {}}
     />
   );
