@@ -190,7 +190,7 @@ if (dashboardState) {
       }}
       onSignOut={() => {}}
       initialState={dashboardState}
-      onPersistState={() => {}}
+      onPersistState={async () => {}}
     />
   );
 }
