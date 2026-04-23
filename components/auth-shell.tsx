@@ -18,43 +18,72 @@ export function AuthShell() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingDashboard, setIsLoadingDashboard] = useState(false);
 
-  useEffect(() => {
-    if (!isSupabaseConfigured) {
-      setIsReady(true);
-      return;
-    }
+useEffect(() => {
+  if (!isSupabaseConfigured) {
+    setIsReady(true);
+    return;
+  }
 
-    let isMounted = true;
-    loadSession()
-      .then((nextSession) => {
-        if (isMounted) {
-          setSession(nextSession);
-          setIsReady(true);
-        }
-      })
-      .catch((error) => {
-        if (isMounted) {
-          setStatus(error instanceof Error ? error.message : "Unable to load the current session.");
-          setIsReady(true);
-        }
-      });
+  let isMounted = true;
 
-    const unsubscribe = listenForAuthChanges((nextSession) => {
+  loadSession()
+    .then(async (nextSession) => {
       if (!isMounted) {
         return;
       }
 
-      setSession(nextSession);
-      if (!nextSession) {
-        setDashboardState(null);
+      if (nextSession) {
+        setSession(nextSession);
+        setIsReady(true);
+        return;
+      }
+
+      const demoEmail = process.env.NEXT_PUBLIC_DEMO_EMAIL ?? "";
+      const demoPassword = process.env.NEXT_PUBLIC_DEMO_PASSWORD ?? "";
+
+      if (!demoEmail || !demoPassword) {
+        setStatus("Demo credentials are missing.");
+        setIsReady(true);
+        return;
+      }
+
+      try {
+        const demoSession = await signIn(demoEmail, demoPassword);
+        if (isMounted) {
+          setSession(demoSession);
+          setStatus("Signed in to demo account.");
+          setIsReady(true);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setStatus(error instanceof Error ? error.message : "Unable to sign in to the demo account.");
+          setIsReady(true);
+        }
+      }
+    })
+    .catch((error) => {
+      if (isMounted) {
+        setStatus(error instanceof Error ? error.message : "Unable to load the current session.");
+        setIsReady(true);
       }
     });
 
-    return () => {
-      isMounted = false;
-      unsubscribe();
-    };
-  }, []);
+  const unsubscribe = listenForAuthChanges((nextSession) => {
+    if (!isMounted) {
+      return;
+    }
+
+    setSession(nextSession);
+    if (!nextSession) {
+      setDashboardState(null);
+    }
+  });
+
+  return () => {
+    isMounted = false;
+    unsubscribe();
+  };
+}, []);
 
   useEffect(() => {
     if (!session) {
@@ -180,17 +209,13 @@ export function AuthShell() {
     );
   }
 
-if (dashboardState) {
+if (session && dashboardState) {
   return (
     <HomePage
-      currentUser={{
-        userId: "demo-user",
-        email: "demo@patient.com",
-        fullName: "Demo Patient",
-      }}
-      onSignOut={() => {}}
+      currentUser={session}
+      onSignOut={handleSignOut}
       initialState={dashboardState}
-      onPersistState={async () => {}}
+      onPersistState={handlePersistState}
     />
   );
 }
