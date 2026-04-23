@@ -1,0 +1,7 @@
+date,testName,value,unit,source,low,high
+2025-06-01,TSH,2.3,uIU/mL,North Valley Clinic,0.45,4.5
+2025-11-21,TSH,3.1,uIU/mL,North Valley Clinic,0.45,4.5
+2026-03-12,TSH,4.9,uIU/mL,North Valley Clinic,0.45,4.5
+2025-06-01,Creatinine,0.92,mg/dL,North Valley Clinic,0.6,1.3
+2025-11-21,Creatinine,0.95,mg/dL,North Valley Clinic,0.6,1.3
+2026-03-12,Creatinine,1.01,mg/dL,North Valley Clinic,0.6,1.3

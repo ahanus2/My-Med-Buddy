@@ -1,0 +1,279 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Segoe UI", "Avenir Next", sans-serif;
+  --background: #c9def0;
+  --foreground: #1b2740;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(62, 120, 179, 0.34), transparent 28%),
+    radial-gradient(circle at top right, rgba(56, 138, 174, 0.24), transparent 34%),
+    radial-gradient(circle at bottom left, rgba(241, 173, 113, 0.18), transparent 24%),
+    linear-gradient(180deg, #e9f4ff 0%, #c9def0 100%);
+  color: var(--foreground);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.panel {
+  border: 1px solid rgba(34, 48, 71, 0.08);
+  background: rgba(245, 250, 255, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 24px 55px rgba(36, 73, 118, 0.16);
+}
+
+.packet-print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 0.5in;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+    min-height: auto;
+  }
+
+  body > * {
+    display: none !important;
+  }
+
+  body > main {
+    display: block !important;
+    min-height: auto !important;
+    padding: 0 !important;
+  }
+
+  body > main > div {
+    display: block !important;
+    max-width: none !important;
+    gap: 0 !important;
+  }
+
+  body > main > div > * {
+    display: none !important;
+  }
+
+  .print-visit-summary {
+    display: block !important;
+    position: static !important;
+    left: auto;
+    top: auto;
+    width: auto;
+    max-width: none;
+    min-height: auto !important;
+    margin: 0 auto !important;
+    max-width: 7.2in !important;
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+  }
+
+  .packet-screen-only,
+  .print-hide {
+    display: none !important;
+  }
+
+  .packet-print-only {
+    display: block !important;
+    color: #1f2937;
+  }
+
+  .print-visit-summary .panel,
+  .print-visit-summary .bg-canvas,
+  .print-visit-summary .bg-white {
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border-color: rgba(34, 48, 71, 0.14) !important;
+  }
+
+  .packet-print-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: flex-start;
+    border-bottom: 2px solid rgba(34, 48, 71, 0.12);
+    padding-bottom: 0.16in;
+    margin-bottom: 0.14in;
+  }
+
+  .packet-print-kicker {
+    margin: 0;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #5b6b80;
+  }
+
+  .packet-print-header h2 {
+    margin: 0.06in 0 0;
+    font-size: 17px;
+    line-height: 1.15;
+    color: #1b2740;
+  }
+
+  .packet-print-meta {
+    margin: 0.05in 0 0;
+    color: #5b6b80;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  .packet-print-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.05in;
+    max-width: 2.5in;
+  }
+
+  .packet-print-badges span {
+    border: 1px solid rgba(34, 48, 71, 0.12);
+    border-radius: 999px;
+    background: #f7f9fc;
+    padding: 0.04in 0.08in;
+    font-size: 9px;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .packet-print-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.12in;
+  }
+
+  .packet-print-grid-compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.1in;
+  }
+
+  .packet-print-card {
+    border: 1px solid rgba(34, 48, 71, 0.1);
+    border-radius: 0.12in;
+    background: #fbfcfe;
+    padding: 0.12in;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .packet-print-card-wide {
+    grid-column: 1 / -1;
+  }
+
+  .packet-print-card h3 {
+    margin: 0 0 0.05in;
+    font-size: 11px;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #44556c;
+  }
+
+  .packet-print-card p {
+    margin: 0.03in 0 0;
+    font-size: 9px;
+    line-height: 1.28;
+    color: #334155;
+  }
+
+  .packet-print-card strong,
+  .packet-print-list strong {
+    color: #1f2937;
+    font-weight: 700;
+  }
+
+  .packet-print-list {
+    margin: 0;
+    padding-left: 0.12in;
+  }
+
+  .packet-print-list li {
+    margin-top: 0.03in;
+    font-size: 9px;
+    line-height: 1.28;
+    color: #334155;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .packet-print-list li:first-child {
+    margin-top: 0;
+  }
+
+  .packet-print-only[data-print-mode="patient"] .packet-print-grid-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .packet-print-only[data-print-mode="patient"] .packet-print-header {
+    border-bottom: 1px solid rgba(34, 48, 71, 0.08);
+  }
+
+  .packet-print-only[data-print-mode="patient"] .packet-print-kicker {
+    letter-spacing: 0.08em;
+  }
+
+  .packet-print-only[data-print-mode="patient"] .packet-print-card {
+    background: #ffffff;
+    border-radius: 0.1in;
+  }
+
+  .packet-print-only[data-print-mode="patient"] .packet-print-card h3 {
+    letter-spacing: 0.03em;
+    text-transform: none;
+    font-size: 10px;
+    color: #334155;
+  }
+
+  .packet-print-only[data-print-mode="patient"] .packet-print-badges span {
+    background: #ffffff;
+  }
+
+      @media print and (max-width: 8.5in) {
+        .packet-print-grid {
+          grid-template-columns: 1fr;
+        }
+
+      .packet-print-grid-compact {
+        grid-template-columns: 1fr;
+      }
+
+    .packet-print-header {
+      display: block;
+    }
+
+    .packet-print-badges {
+      justify-content: flex-start;
+      margin-top: 0.12in;
+      max-width: none;
+    }
+  }
+}
