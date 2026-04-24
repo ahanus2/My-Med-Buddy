@@ -55,11 +55,16 @@ useEffect(() => {
           setIsReady(true);
         }
       } catch (error) {
-        if (isMounted) {
-          setStatus(error instanceof Error ? error.message : "Unable to sign in to the demo account.");
-          setIsReady(true);
-        }
-      }
+  if (isMounted) {
+    console.log("DEMO LOGIN ERROR:", error);
+    setStatus(
+      error instanceof Error
+        ? error.message
+        : JSON.stringify(error)
+    );
+    setIsReady(true);
+  }
+}
     })
     .catch((error) => {
       if (isMounted) {
